@@ -1,4 +1,4 @@
-/*! elementor - v3.1.2 - 02-03-2021 */
+/*! elementor - v3.1.4 - 10-03-2021 */
 (self["webpackChunkelementor"] = self["webpackChunkelementor"] || []).push([["preloaded-elements-handlers"],{
 
 /***/ "../node_modules/@babel/runtime-corejs2/core-js/object/define-properties.js":
@@ -1375,7 +1375,8 @@ var baseTabs = /*#__PURE__*/function (_elementorModules$fro) {
       $activeTitle.add($activeContent).removeClass(activeClass);
       $activeTitle.attr({
         tabindex: '-1',
-        'aria-selected': 'false'
+        'aria-selected': 'false',
+        'aria-expanded': 'false'
       });
       $activeContent[settings.hideTabFn]();
       $activeContent.attr('hidden', 'hidden');
@@ -1391,7 +1392,8 @@ var baseTabs = /*#__PURE__*/function (_elementorModules$fro) {
       $requestedTitle.add($requestedContent).addClass(activeClass);
       $requestedTitle.attr({
         tabindex: '0',
-        'aria-selected': 'true'
+        'aria-selected': 'true',
+        'aria-expanded': 'true'
       });
       $requestedContent[settings.showTabFn](animationDuration, function () {
         return elementorFrontend.elements.$window.trigger('resize');
@@ -2294,13 +2296,20 @@ var Video = /*#__PURE__*/function (_elementorModules$fro) {
     value: function handleVideo() {
       var _this = this;
 
-      this.apiProvider.onApiReady(function (apiObject) {
-        if (!_this.getElementSettings('lightbox')) {
+      if (this.getElementSettings('lightbox')) {
+        return;
+      }
+
+      if ('youtube' === this.getElementSettings('video_type')) {
+        this.apiProvider.onApiReady(function (apiObject) {
           _this.elements.$imageOverlay.remove();
 
           _this.prepareYTVideo(apiObject, true);
-        }
-      });
+        });
+      } else {
+        this.elements.$imageOverlay.remove();
+        this.playVideo();
+      }
     }
   }, {
     key: "playVideo",

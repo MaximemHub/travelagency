@@ -1,4 +1,4 @@
-/*! elementor - v3.1.2 - 02-03-2021 */
+/*! elementor - v3.1.4 - 10-03-2021 */
 (self["webpackChunkelementor"] = self["webpackChunkelementor"] || []).push([["video"],{
 
 /***/ "../assets/dev/js/frontend/handlers/video.js":
@@ -84,13 +84,20 @@ var Video = /*#__PURE__*/function (_elementorModules$fro) {
     value: function handleVideo() {
       var _this = this;
 
-      this.apiProvider.onApiReady(function (apiObject) {
-        if (!_this.getElementSettings('lightbox')) {
+      if (this.getElementSettings('lightbox')) {
+        return;
+      }
+
+      if ('youtube' === this.getElementSettings('video_type')) {
+        this.apiProvider.onApiReady(function (apiObject) {
           _this.elements.$imageOverlay.remove();
 
           _this.prepareYTVideo(apiObject, true);
-        }
-      });
+        });
+      } else {
+        this.elements.$imageOverlay.remove();
+        this.playVideo();
+      }
     }
   }, {
     key: "playVideo",
@@ -397,4 +404,4 @@ __webpack_require__(/*! ./_fix-re-wks */ "../node_modules/core-js/modules/_fix-r
 /***/ })
 
 }]);
-//# sourceMappingURL=video.4867cd778fc28aa3d2f9.bundle.js.map
+//# sourceMappingURL=video.0b0142741907d3f9479c.bundle.js.map

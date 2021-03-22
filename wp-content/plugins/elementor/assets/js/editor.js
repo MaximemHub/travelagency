@@ -1,4 +1,4 @@
-/*! elementor - v3.1.2 - 02-03-2021 */
+/*! elementor - v3.1.4 - 10-03-2021 */
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -26329,7 +26329,7 @@ exports.default = Heartbeat;
   \************************************************/
 /*! unknown exports (runtime-defined) */
 /*! runtime requirements: module, __webpack_require__ */
-/*! CommonJS bailout: module.exports is used directly at 27:0-14 */
+/*! CommonJS bailout: module.exports is used directly at 30:0-14 */
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 "use strict";
@@ -26337,6 +26337,8 @@ exports.default = Heartbeat;
 
 
 var _interopRequireDefault = __webpack_require__(/*! @babel/runtime-corejs2/helpers/interopRequireDefault */ "../node_modules/@babel/runtime-corejs2/helpers/interopRequireDefault.js");
+
+__webpack_require__(/*! core-js/modules/es7.array.includes */ "../node_modules/core-js/modules/es7.array.includes.js");
 
 __webpack_require__(/*! core-js/modules/es6.number.constructor */ "../node_modules/core-js/modules/es6.number.constructor.js");
 
@@ -26360,6 +26362,7 @@ var _colorPicker = _interopRequireDefault(__webpack_require__(/*! ./color-picker
 
 var _helper = _interopRequireDefault(__webpack_require__(/*! elementor-editor/document/helper */ "../assets/dev/js/editor/document/helper.js"));
 
+var allowedHTMLWrapperTags = ['article', 'aside', 'div', 'footer', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'header', 'main', 'nav', 'p', 'section', 'span'];
 module.exports = {
   document: _helper.default,
   _enqueuedFonts: {
@@ -26992,6 +26995,19 @@ module.exports = {
   },
   hasPro: function hasPro() {
     return !!window.elementorPro;
+  },
+
+  /**
+   * Function validateHTMLTag().
+   *
+   * Validate an HTML tag against a safe allowed list.
+   *
+   * @param {string} tag
+   *
+   * @returns {string}
+   */
+  validateHTMLTag: function validateHTMLTag(tag) {
+    return allowedHTMLWrapperTags.includes(tag.toLowerCase()) ? tag : 'div';
   }
 };
 

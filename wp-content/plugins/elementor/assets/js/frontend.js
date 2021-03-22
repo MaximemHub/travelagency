@@ -1,4 +1,4 @@
-/*! elementor - v3.1.2 - 02-03-2021 */
+/*! elementor - v3.1.4 - 10-03-2021 */
 (self["webpackChunkelementor"] = self["webpackChunkelementor"] || []).push([["frontend"],{
 
 /***/ "../node_modules/@babel/runtime-corejs2/core-js/array/from.js":
@@ -3576,14 +3576,15 @@ module.exports = elementorModules.ViewModule.extend({
       case 'slideshow':
         self.setSlideshowContent(options.slideshow);
         break;
-
-      default:
-        self.setHTMLContent(options.html);
     }
 
     modal.show();
   },
   setHTMLContent: function setHTMLContent(html) {
+    if (window.elementorCommon) {
+      elementorCommon.helpers.hardDeprecated('elementorFrontend.utils.lightbox.setHTMLContent', '3.1.4');
+    }
+
     this.getModal().setMessage(html);
   },
   setVideoContent: function setVideoContent(options) {
@@ -4212,7 +4213,8 @@ module.exports = elementorModules.ViewModule.extend({
     }
   },
   isLightboxLink: function isLightboxLink(element) {
-    if ('A' === element.tagName && (element.hasAttribute('download') || !/^[^?]+\.(png|jpe?g|gif|svg|webp)(\?.*)?$/i.test(element.href))) {
+    // Check for lowercase `a` to make sure it works also for links inside SVGs.
+    if ('a' === element.tagName.toLowerCase() && (element.hasAttribute('download') || !/^[^?]+\.(png|jpe?g|gif|svg|webp)(\?.*)?$/i.test(element.href))) {
       return false;
     }
 
